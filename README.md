@@ -1,7 +1,8 @@
 # Daily Diet API
 
 API feita com base no segundo desafio da trilha de Node js da rocket seat
-<img src="https://s3-alpha.figma.com/hub/file/3642374460/resized/800x480/9d262d19-6ada-4da0-b864-a2641cdd0610-cover.png"/>
+![capa](https://s3-alpha.figma.com/hub/file/3642374460/resized/800x480/9d262d19-6ada-4da0-b864-a2641cdd0610-cover.png)
+
 
 É uma API desenvolvida para servir a uma aplicação de dieta pessoal onde o usuario se cadastra no app e consegue registrar refeições do dia a dia e obter um acompanhamento de sua jornada durante a dieta.
 
