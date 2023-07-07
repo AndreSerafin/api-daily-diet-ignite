@@ -1,19 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { prisma } from '../services/prisma'
-
-interface IUser {
-  name: string
-  email: string
-  password: string
-  sesion_id?: string
-}
-
-interface IUpdatedUser {
-  name?: string
-  email?: string
-  password?: string
-  sesion_id?: string
-}
+import { IUpdatedUser, IUser } from '../interfaces/interfaces'
 
 export async function createUser(data: IUser) {
   try {
@@ -37,6 +24,23 @@ export async function listUsers() {
 export async function getUserById(id: string) {
   try {
     return await prisma.user.findUnique({ where: { id } })
+  } catch (e: any) {
+    return null
+  }
+}
+
+export async function getUserByEmail(email: string) {
+  try {
+    return await prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        email: true,
+        meals: true,
+      },
+    })
   } catch (e: any) {
     return null
   }

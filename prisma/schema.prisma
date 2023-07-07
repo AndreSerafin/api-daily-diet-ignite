@@ -15,7 +15,25 @@ model User {
   email String  @unique
   name  String  
   password String
-  session_id String? @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
+  role Role @default(USER)
+  meals Meal[] 
+  sessionId String? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Meal {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  name String
+  description String?
+  isAtDiet Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
 }
