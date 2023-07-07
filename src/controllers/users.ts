@@ -24,9 +24,9 @@ export async function create(req: FastifyRequest, rep: FastifyReply) {
 
     const response = await createUser({ email, name, password })
 
-    rep.send(response)
+    return rep.send(response)
   } catch (e: any) {
-    rep.status(400).send({ message: JSON.parse(e.message) })
+    return rep.status(400).send({ message: JSON.parse(e.message) })
   }
 }
 
@@ -36,7 +36,7 @@ export async function list(req: FastifyRequest, rep: FastifyReply) {
 
     return { users }
   } catch (e: any) {
-    rep.status(400).send({ message: JSON.parse(e.message) })
+    return rep.status(400).send({ message: JSON.parse(e.message) })
   }
 }
 
@@ -50,9 +50,9 @@ export async function getById(req: FastifyRequest, rep: FastifyReply) {
       rep.status(404).send({ message: 'id not found' })
     }
 
-    rep.status(201).send({ user })
+    return rep.status(201).send({ user })
   } catch (e: any) {
-    rep.status(400).send({ message: JSON.parse(e.message) })
+    return rep.status(400).send({ message: JSON.parse(e.message) })
   }
 }
 
@@ -61,10 +61,10 @@ export async function deleteUserById(req: FastifyRequest, rep: FastifyReply) {
   try {
     const deletedUser = await deleteUser(id)
     if (!deletedUser) {
-      rep.status(404).send({ message: 'id not found' })
+      return rep.status(404).send({ message: 'id not found' })
     }
   } catch (e: any) {
-    rep.status(400).send({ message: JSON.parse(e.message) })
+    return rep.status(400).send({ message: JSON.parse(e.message) })
   }
 }
 
@@ -80,11 +80,11 @@ export async function updateUserById(req: FastifyRequest, rep: FastifyReply) {
     const updatedUser = await updateUser(id, { email, name, password })
 
     if (!updatedUser) {
-      rep.status(404).send({ message: 'id not found' })
+      return rep.status(404).send({ message: 'id not found' })
     }
-    rep.status(200).send(updatedUser)
+    return rep.status(200).send(updatedUser)
   } catch (e: any) {
-    rep.status(400).send({ message: JSON.parse(e.message) })
+    return rep.status(400).send({ message: JSON.parse(e.message) })
   }
 }
 

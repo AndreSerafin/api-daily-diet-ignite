@@ -43,6 +43,7 @@ export async function getById(userId: string, id: number) {
 export async function deleteById(userId: string, id: number) {
   try {
     await prisma.meal.deleteMany({ where: { userId, id } })
+    return await list(userId)
   } catch (e: any) {
     return null
   }

@@ -6,6 +6,7 @@ export async function createUser(data: IUser) {
   try {
     return await prisma.user.create({
       data,
+      select: { id: true, email: true,  },
     })
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
