@@ -3,7 +3,7 @@
 API feita com base no segundo desafio da trilha de Node js da rocket seat
 
 
-É uma API desenvolvida para servir a uma aplicação de dieta pessoal onde o usuario se cadastra no app e consegue registrar refeições do dia a dia e obter um acompanhamento de sua jornada durante a dieta.
+É uma API desenvolvida para servir a uma aplicação de dieta pessoal onde o usuario se cadastra no app e consegue registrar refeições do dia a dia e obter um acompanhamento de sua jornada durante a dieta
 
 ## Utilização da API
 
