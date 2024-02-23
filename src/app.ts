@@ -2,8 +2,8 @@ import { ZodError } from 'zod'
 import { usersRoutes } from './http/controllers/users/routes'
 import fastify from 'fastify'
 import fastifyJwt from '@fastify/jwt'
-import { env } from './.env'
 import fastifyCookie from '@fastify/cookie'
+import { env } from './env'
 
 export const app = fastify()
 

@@ -62,4 +62,33 @@ export class InMemoryMealsRepository implements MealsRepository {
 
     return newMeal
   }
+
+  async delete(id: string, user_id: string) {
+    const mealsWithoutTheDeletedOne = [] as Meal[]
+    let deletedMeal: Meal | undefined
+
+    this.items.forEach((item) => {
+      if (item.id === id && item.user_id === user_id) {
+        deletedMeal = item
+      } else {
+        mealsWithoutTheDeletedOne.push(item)
+      }
+    })
+
+    this.items = mealsWithoutTheDeletedOne
+
+    return deletedMeal
+  }
+
+  async fetchByUser(user_id: string) {
+    const meals = [] as Meal[]
+
+    this.items.forEach((item) => {
+      if (item.user_id === user_id) {
+        meals.push(item)
+      }
+    })
+
+    return meals
+  }
 }

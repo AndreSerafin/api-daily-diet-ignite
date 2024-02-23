@@ -45,4 +45,4 @@ describe('Edit Meal Use Case', () => {
       })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
-  a})
+})
