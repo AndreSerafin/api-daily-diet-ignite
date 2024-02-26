@@ -1,10 +1,8 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { describe, beforeEach, it, expect } from 'vitest'
 import { AuthenticateUseCase } from './authenticate'
-import { compare } from 'bcryptjs'
-import { UserAlreadyExistsError } from './errors/user-already-exists'
 import { RegisterUseCase } from './register'
-import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 
 let usersRepository: InMemoryUsersRepository
 let sut: AuthenticateUseCase

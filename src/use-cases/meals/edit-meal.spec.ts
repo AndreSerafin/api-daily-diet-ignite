@@ -2,7 +2,7 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { InMemoryMealsRepository } from '@/repositories/in-memory/in-memory-meals-repository'
 import { CreateMealUseCase } from './create-meal'
 import { EditMealUseCase } from './edit-meal'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 let mealsRepository: InMemoryMealsRepository
 let createMealUseCase: CreateMealUseCase
@@ -23,9 +23,13 @@ describe('Edit Meal Use Case', () => {
       userId: 'user-01',
     })
 
-    const { meal: editedMeal } = await sut.execute(createdMeal.id, {
-      name: 'Arroz Frito',
-      description: 'Arroz frito com salada',
+    const { meal: editedMeal } = await sut.execute({
+      id: createdMeal.id,
+      userId: createdMeal.user_id,
+      meal: {
+        name: 'Arroz Frito',
+        description: 'Arroz frito com salada',
+      },
     })
 
     expect(editedMeal).toEqual(
@@ -37,11 +41,28 @@ describe('Edit Meal Use Case', () => {
     )
   })
 
-  it('should not be able to edit an unexistent meal', async () => {
+  it('should not be able to edit a meal created by another user', async () => {
+    mealsRepository.create({
+      name: 'Lasanha',
+      description:
+        'Lasanha de carne moída, molho de tomate, queijo e massa fresca',
+      is_at_diet: false,
+      user_id: 'user-01',
+    })
+
+    const mealToEdit = await mealsRepository.create({
+      name: 'Salada Caesar',
+      description:
+        'Salada de alface romana, croutons, queijo parmesão e molho Caesar',
+      is_at_diet: true,
+      user_id: 'user-02',
+    })
+
     expect(async () => {
-      await sut.execute('meal-01', {
-        name: 'Arroz Frito',
-        description: 'Arroz frito com salada',
+      await sut.execute({
+        id: mealToEdit.id,
+        userId: 'user-01',
+        meal: { name: ' Feijoada', description: '' },
       })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

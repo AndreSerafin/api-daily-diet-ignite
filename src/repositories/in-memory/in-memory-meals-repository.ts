@@ -5,8 +5,14 @@ import { randomUUID } from 'crypto'
 export class InMemoryMealsRepository implements MealsRepository {
   items: Array<Meal> = []
 
-  async update(id: string, data: Prisma.MealUncheckedUpdateInput) {
-    const mealIndex = this.items.findIndex((item) => item.id === id)
+  async update(
+    id: string,
+    user_id: string,
+    data: Prisma.MealUncheckedUpdateInput,
+  ) {
+    const mealIndex = this.items.findIndex(
+      (item) => item.id === id && item.user_id === user_id,
+    )
 
     if (mealIndex === -1) {
       return null
@@ -24,10 +30,7 @@ export class InMemoryMealsRepository implements MealsRepository {
         typeof data.is_at_diet === 'boolean'
           ? data.is_at_diet
           : this.items[mealIndex].is_at_diet,
-      user_id:
-        typeof data.user_id === 'string'
-          ? data.user_id
-          : this.items[mealIndex].user_id,
+      user_id: this.items[mealIndex].user_id,
       created_at: this.items[mealIndex].created_at,
       updated_at: new Date(),
     }
@@ -37,8 +40,10 @@ export class InMemoryMealsRepository implements MealsRepository {
     return updatedMeal
   }
 
-  async findById(id: string) {
-    const meal = this.items.find((item) => item.id === id)
+  async findById(id: string, user_id: string) {
+    const meal = this.items.find(
+      (item) => item.id === id && item.user_id === user_id,
+    )
 
     if (!meal) {
       return null

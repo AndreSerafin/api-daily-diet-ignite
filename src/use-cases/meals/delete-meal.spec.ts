@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 import { InMemoryMealsRepository } from '@/repositories/in-memory/in-memory-meals-repository'
 import { CreateMealUseCase } from './create-meal'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 import { DeleteMealUseCase } from './delete-meal'
 
 let mealsRepository: InMemoryMealsRepository

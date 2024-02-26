@@ -1,12 +1,17 @@
 import { Meal } from '@prisma/client'
 import { MealsRepository } from '@/repositories/meals-repository'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+
+interface MealData {
+  name: string
+  description: string
+  isAtDiet: boolean
+}
 
 interface EditMealUseCaseRequest {
-  name?: string
-  description?: string
-  isAtDiet?: boolean
-  userId?: string
+  id: string
+  userId: string
+  meal: Partial<MealData>
 }
 
 interface EditMealUseCaseResponse {
@@ -16,15 +21,15 @@ interface EditMealUseCaseResponse {
 export class EditMealUseCase {
   constructor(private mealsRepository: MealsRepository) {}
 
-  async execute(
-    id: string,
-    { name, description, isAtDiet, userId }: EditMealUseCaseRequest,
-  ): Promise<EditMealUseCaseResponse> {
-    const meal = await this.mealsRepository.update(id, {
+  async execute({
+    id,
+    userId,
+    meal: { description, isAtDiet, name },
+  }: EditMealUseCaseRequest): Promise<EditMealUseCaseResponse> {
+    const meal = await this.mealsRepository.update(id, userId, {
       name,
       description,
       is_at_diet: isAtDiet,
-      user_id: userId,
     })
 
     if (!meal) {
